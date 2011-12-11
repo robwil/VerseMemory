@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xml;
+using Microsoft.Win32;
 
 namespace VerseMemory
 {
@@ -47,9 +49,7 @@ namespace VerseMemory
             }
             else if (e.Key == Key.I)
             {
-                ImportFileWindow w = new ImportFileWindow();
-                w.ShowDialog();
-                HandleNewSlides();
+                ImportFile();
             }
             else if (e.Key == Key.M)
             {
@@ -67,12 +67,66 @@ namespace VerseMemory
             {
                 currentSlide.weight--;
             }
+            else if (e.Key == Key.D)
+            {
+                DeleteCurrentSlide();
+            }
             else if (e.Key == Key.Escape)
             {
                 SaveSlidesToFile();
                 Close();
             }
             UpdateScreenText();
+        }
+
+        /**
+         * Prompt the user to browse for a file in Mnemosyne XML format.
+         * Then import that file into the Not Memorized deck.
+         **/
+        private void ImportFile()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog().GetValueOrDefault())
+            {
+                try
+                {
+                    using (Stream fileStream = dialog.OpenFile())
+                    {
+                        StreamReader streamReader = new StreamReader(fileStream);
+                        string xmlString = streamReader.ReadToEnd();
+                        fileStream.Close();
+
+                        using (XmlReader xmlReader = XmlReader.Create(new StringReader(xmlString)))
+                        {
+                            List<Slide> slidesFromFile = new List<Slide>();
+                            Slide slide = null;
+
+                            while (xmlReader.ReadToFollowing("item"))
+                            {
+                                if (xmlReader.IsStartElement())
+                                {
+                                    xmlReader.ReadToFollowing("Q");
+                                    xmlReader.Read();
+                                    String question = xmlReader.Value;
+                                    xmlReader.ReadToFollowing("A");
+                                    xmlReader.Read();
+                                    String answer = xmlReader.Value;
+                                    slide = new Slide(question, answer);
+                                    slidesFromFile.Add(slide);
+                                }
+                            }
+
+                            deck.notMemorizedSlides.AddRange(slidesFromFile);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                }
+
+                HandleNewSlides();
+            }
         }
 
         /**
@@ -94,6 +148,17 @@ namespace VerseMemory
 
             currentSlide.isMemorized = !currentSlide.isMemorized;
             UpdateScreenText();
+        }
+
+        /**
+         * Delete the currently active slide from all decks and advance to new slide.
+         **/
+        private void DeleteCurrentSlide()
+        {
+            deck.remainingSlides.Remove(currentSlide);
+            deck.notMemorizedSlides.Remove(currentSlide);
+            deck.finishedSlides.Remove(currentSlide);
+            ShowNextAvailableSlide();
         }
 
         /**
