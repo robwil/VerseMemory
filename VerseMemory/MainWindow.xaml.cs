@@ -62,14 +62,21 @@ namespace VerseMemory
             else if (e.Key == Key.Up)
             {
                 currentSlide.weight++;
+                deck.SortAll();
             }
             else if (e.Key == Key.Down)
             {
                 currentSlide.weight--;
+                deck.SortAll();
             }
             else if (e.Key == Key.D)
             {
                 DeleteCurrentSlide();
+            }
+            else if (e.Key == Key.H)
+            {
+                HelpWindow w = new HelpWindow();
+                w.ShowDialog();
             }
             else if (e.Key == Key.Escape)
             {
@@ -190,9 +197,7 @@ namespace VerseMemory
         private void HandleNewSlides()
         {
             // Sort the decks by weight to handle latest additions
-            deck.remainingSlides.Sort();
-            deck.finishedSlides.Sort();
-            deck.notMemorizedSlides.Sort();
+            deck.SortAll();
 
             // If no slide is currently being displayed, but we have stuff to display. Show the next available slide.
             if (currentSlide == null && (deck.remainingSlides.Count + deck.notMemorizedSlides.Count) > 0)
@@ -299,6 +304,7 @@ namespace VerseMemory
                     return;
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Deck));
                 deck = serializer.ReadObject(fileStream) as Deck;
+                HandleNewSlides();
             }
         }
 
@@ -309,6 +315,11 @@ namespace VerseMemory
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Deck));
                 serializer.WriteObject(fileStream, deck);
             }
+        }
+
+        private void ResizeHandler(object sender, SizeChangedEventArgs e)
+        {
+            //MainGrid.Height = e.NewSize.Height;
         }
     }
 }

@@ -21,5 +21,12 @@ namespace VerseMemory
             finishedSlides = new List<Slide>();
             notMemorizedSlides = new List<Slide>();
         }
+
+        public void SortAll()
+        {
+            remainingSlides.Sort();
+            finishedSlides.Sort();
+            notMemorizedSlides.Sort();
+        }
     }
 }

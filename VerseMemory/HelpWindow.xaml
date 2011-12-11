@@ -1,0 +1,18 @@
+﻿<Window x:Class="VerseMemory.HelpWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HelpWindow" Height="514" Width="608" Foreground="White" Background="Black" KeyDown="OnKeyDownHandler">
+    <Grid>
+        <TextBlock Height="451" HorizontalAlignment="Left" Name="textBlock1" Text="TextBlock" VerticalAlignment="Top" Width="562" Background="Black" TextWrapping="Wrap" FontSize="18" Margin="12,12,0,0">
+            Enter - Flip slide from question to answer. Then proceed to next slide. <LineBreak/><LineBreak/>
+            I - Import Mnemosyne XML file. <LineBreak/><LineBreak/>
+            M - Toggle whether the current slide is memorized or not. <LineBreak/><LineBreak/>
+            Up Arrow - Increase weight of current slide. Higher weight cards are shown first.<LineBreak/><LineBreak/>
+            Down Arrow - Decrease weight of current slide. <LineBreak/><LineBreak/>
+            N - Add new slide. <LineBreak/><LineBreak/>
+            D - Delete current slide. <LineBreak/><LineBreak/>
+            E - Edit current slide. <LineBreak/><LineBreak/>
+            ESC - Close any window, including main window.
+        </TextBlock>
+    </Grid>
+</Window>
