@@ -33,7 +33,7 @@ namespace VerseMemory
         private void btnAddSlide_Click(object sender, RoutedEventArgs e)
         {
             Slide newSlide = new Slide(txtQuestion.Text, txtAnswer.Text);
-            mainWindowRef.notMemorizedSlides.Add(newSlide);
+            mainWindowRef.deck.notMemorizedSlides.Add(newSlide);
             Close();
         }
 

@@ -24,11 +24,14 @@ namespace VerseMemory
             this.answer = answer;
         }
 
+        /**
+         * Sorts in descending order (higher elements first).
+         **/
         public int CompareTo(object obj)
         {
             Slide otherSlide = obj as Slide;
             if (otherSlide != null)
-                return weight - otherSlide.weight;
+                return otherSlide.weight - weight;
 
             return 0;
         }

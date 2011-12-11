@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace VerseMemory
 {
@@ -58,16 +59,26 @@ namespace VerseMemory
             {
                 ResetDecks();
             }
-            else if (e.Key == Key.S)
-                SaveSlidesToFile();
+            else if (e.Key == Key.Up)
+            {
+                currentSlide.weight++;
+            }
+            else if (e.Key == Key.Down)
+            {
+                currentSlide.weight--;
+            }
             else if (e.Key == Key.Escape)
             {
-                // TODO: Save state to disk
+                SaveSlidesToFile();
                 Close();
             }
             UpdateScreenText();
         }
 
+        /**
+         * Toggle whether or not the current slide is memorized.
+         * Handles moving it to or from the Not Memorized deck.
+         **/
         private void ToggleMemorized()
         {
             if (currentSlide.isMemorized)
@@ -80,10 +91,14 @@ namespace VerseMemory
                 deck.notMemorizedSlides.Remove(currentSlide);
                 deck.remainingSlides.Add(currentSlide);
             }
+
             currentSlide.isMemorized = !currentSlide.isMemorized;
             UpdateScreenText();
         }
 
+        /**
+         * Reset decks, meaning that all Finished slides move into their appropriate deck.
+         **/
         private void ResetDecks()
         {
             for (int i = deck.finishedSlides.Count - 1; i >= 0; i--)
@@ -100,9 +115,13 @@ namespace VerseMemory
 
                 deck.finishedSlides.RemoveAt(i);
             }
+
             HandleNewSlides();
         }
 
+        /**
+         * Perform any modifications needed when new slides are added.
+         **/
         private void HandleNewSlides()
         {
             // Sort the decks by weight to handle latest additions
@@ -115,6 +134,10 @@ namespace VerseMemory
                 ShowNextAvailableSlide();
         }
 
+        /**
+         * Move to next slide.
+         * This also performs necessary work to move just-finished card to appropriate deck.
+         **/
         private void AdvanceSlide()
         {
             // handle normal case, where card is memorized
@@ -171,6 +194,15 @@ namespace VerseMemory
                 lblSlideStats.Content = "Weight: " + currentSlide.weight + "\tMemorized: " + currentSlide.isMemorized;
                 lblQuestion.Content = currentSlide.question;
                 txtAnswer.Text = currentSlide.answer;
+
+                // color slide based on whether it is memorized or not
+                SolidColorBrush brush = currentSlide.isMemorized
+                                            ? new SolidColorBrush(Colors.LightGreen)
+                                            : new SolidColorBrush(Colors.LightSalmon);
+
+                txtAnswer.Foreground = brush;
+                lblQuestion.Foreground = brush;
+
             }
         }
 
