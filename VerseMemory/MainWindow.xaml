@@ -1,0 +1,13 @@
+﻿<Window x:Class="VerseMemory.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Verse Memory" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="465" Width="525" KeyDown="OnKeyDownHandler">
+    <Grid>
+        <Label Content="" Height="45" HorizontalAlignment="Left" Margin="12,139,0,0" Name="lblQuestion" VerticalAlignment="Top" FontSize="24" Width="479" />
+        <TextBlock Height="320" HorizontalAlignment="Left" Margin="12,53,0,0" Name="txtAnswer" VerticalAlignment="Top" Width="479" TextWrapping="Wrap" FontSize="24">
+            "The temptations in your life are no different from what others experience. And God is faithful. He will not allow the temptation to be more than you cna stand. When you are tempted, he will show you a way out so you can endure." (NLT) <LineBreak/><LineBreak/> 0. Assurance of Victory
+        </TextBlock>
+        <Label Content="Remaining:" Height="35" HorizontalAlignment="Left" Margin="12,379,0,0" Name="lblStatus" VerticalAlignment="Top" FontSize="18" Width="479" />
+        <Label Content="Weight:" FontSize="18" Height="35" HorizontalAlignment="Left" Margin="12,12,0,0" Name="lblSlideStats" VerticalAlignment="Top" Width="479" />
+    </Grid>
+</Window>

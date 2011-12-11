@@ -1,0 +1,10 @@
+﻿<Window x:Class="VerseMemory.NewSlideWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="New Slide" Height="300" Width="300" KeyDown="OnKeyDownHandler" Loaded="OnLoaded">
+    <Grid>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="txtQuestion" VerticalAlignment="Top" Width="254" KeyDown="OnKeyDownHandler" />
+        <TextBox Height="179" HorizontalAlignment="Left" Margin="12,41,0,0" Name="txtAnswer" VerticalAlignment="Top" Width="254" TextWrapping="Wrap" />
+        <Button Content="Add Slide" Height="23" HorizontalAlignment="Left" Margin="12,226,0,0" Name="btnAddSlide" VerticalAlignment="Top" Width="254" Click="btnAddSlide_Click" KeyDown="OnKeyDownHandler" />
+    </Grid>
+</Window>

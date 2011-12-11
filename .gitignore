@@ -1,0 +1,13 @@
+# Build and Object Folders
+VerseMemory/bin/
+VerseMemory/obj/
+VerseMemory/publish/
+
+#User Specific Files
+*.user
+*.suo
+
+#Resource Caches
+_ReSharper.*
+*.sln.cache
+*.cachefile
