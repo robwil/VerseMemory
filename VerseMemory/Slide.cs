@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace VerseMemory
 {
     [DataContract]
-    class Slide : IComparable
+    public class Slide : IComparable
     {
         [DataMember]
         public String question { get; set; }

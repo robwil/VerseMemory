@@ -1,0 +1,10 @@
+﻿<Window x:Class="VerseMemory.EditSlideWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Edit Slide" Height="300" Width="300" KeyDown="OnKeyDownHandler" Loaded="OnLoaded" Background="#FF030303">
+    <Grid>
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Name="txtQuestion" VerticalAlignment="Top" Width="254" KeyDown="OnKeyDownHandler" Background="#FF070707" Foreground="White" />
+        <TextBox Height="179" HorizontalAlignment="Left" Margin="12,41,0,0" Name="txtAnswer" VerticalAlignment="Top" Width="254" TextWrapping="Wrap" Background="#FF030303" Foreground="White" />
+        <Button Content="Edit Slide" Height="23" HorizontalAlignment="Left" Margin="12,226,0,0" Name="btnEditSlide" VerticalAlignment="Top" Width="254" Click="btnEditSlide_Click" KeyDown="OnKeyDownHandler" />
+    </Grid>
+</Window>

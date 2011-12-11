@@ -33,6 +33,10 @@ namespace VerseMemory
             UpdateScreenText();
         }
 
+        /**
+         * Key handler.
+         * Since this app is primarily keyboard-focused, this is where the mapping of user interaction to logic happens.
+         **/
         private void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Return)
@@ -77,6 +81,12 @@ namespace VerseMemory
             {
                 HelpWindow w = new HelpWindow();
                 w.ShowDialog();
+            }
+            else if (e.Key == Key.E)
+            {
+                EditSlideWindow w = new EditSlideWindow(currentSlide);
+                w.ShowDialog();
+                UpdateScreenText();
             }
             else if (e.Key == Key.Escape)
             {
@@ -229,6 +239,9 @@ namespace VerseMemory
             UpdateScreenText();
         }
 
+        /**
+         * Swap question and answer display.
+         **/
         private void SwapVisibilities()
         {
             if (showingAnswer)
@@ -296,6 +309,9 @@ namespace VerseMemory
             }
         }
 
+        /**
+         * Load previously saved Deck from the JSON data file.
+         **/
         private void LoadSlidesFromFile()
         {
             using (FileStream fileStream = new FileStream("slides.js", FileMode.OpenOrCreate, FileAccess.Read))
@@ -308,6 +324,9 @@ namespace VerseMemory
             }
         }
 
+        /**
+         * Save current Deck to the JSON data file.
+         **/
         private void SaveSlidesToFile()
         {
             using (FileStream fileStream = new FileStream("slides.js", FileMode.Create, FileAccess.Write))
@@ -315,11 +334,6 @@ namespace VerseMemory
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Deck));
                 serializer.WriteObject(fileStream, deck);
             }
-        }
-
-        private void ResizeHandler(object sender, SizeChangedEventArgs e)
-        {
-            //MainGrid.Height = e.NewSize.Height;
         }
     }
 }
