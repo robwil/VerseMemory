@@ -88,9 +88,21 @@ namespace VerseMemory
                 w.ShowDialog();
                 UpdateScreenText();
             }
+            else if (e.Key == Key.V)
+            {
+                List<Slide> currentDeckSlides;
+                if (deck.notMemorizedSlides.Count > 0)
+                    currentDeckSlides = deck.notMemorizedSlides;
+                else if (deck.remainingSlides.Count > 0)
+                    currentDeckSlides = deck.remainingSlides;
+                else
+                    currentDeckSlides = deck.finishedSlides;
+
+                DeckViewWindow w = new DeckViewWindow(currentDeckSlides);
+                w.ShowDialog();
+            }
             else if (e.Key == Key.Escape)
             {
-                SaveSlidesToFile();
                 Close();
             }
             UpdateScreenText();
@@ -334,6 +346,11 @@ namespace VerseMemory
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Deck));
                 serializer.WriteObject(fileStream, deck);
             }
+        }
+
+        private void OnClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SaveSlidesToFile();
         }
     }
 }

@@ -35,5 +35,13 @@ namespace VerseMemory
 
             return 0;
         }
+
+        /**
+         * Overrides ToString to do something intelligent
+         **/
+        public override string ToString()
+        {
+            return question + " (" + weight.ToString() + ")";
+        }
     }
 }

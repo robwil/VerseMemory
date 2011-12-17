@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace VerseMemory
 {
     [DataContract]
-    class Deck
+    public class Deck
     {
         [DataMember]
         public List<Slide> remainingSlides { get; set; }

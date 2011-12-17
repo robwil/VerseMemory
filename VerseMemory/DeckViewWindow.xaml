@@ -1,0 +1,8 @@
+﻿<Window x:Class="VerseMemory.DeckViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Deck View" Height="300" Width="300" KeyDown="OnKeyDownHandler" Loaded="OnLoaded" Background="Black" Foreground="White">
+    <Grid>
+        <ListBox Height="261" HorizontalAlignment="Left" Name="lstDeckView" VerticalAlignment="Top" Width="278" KeyDown="OnKeyDownHandler" Foreground="White" Background="Black" />
+    </Grid>
+</Window>
