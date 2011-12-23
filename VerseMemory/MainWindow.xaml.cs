@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -13,11 +14,12 @@ namespace VerseMemory
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private bool showingAnswer;
         internal Deck deck;
         private Slide currentSlide;
+        private Timer timer;
 
         public MainWindow()
         {
@@ -31,13 +33,22 @@ namespace VerseMemory
             LoadSlidesFromFile();
 
             UpdateScreenText();
+
+            timer = new Timer(30000);
+            timer.Elapsed += timer_Elapsed;
+            timer.Enabled = true;
+        }
+
+        private void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            SaveSlidesToFile();
         }
 
         /**
          * Key handler.
          * Since this app is primarily keyboard-focused, this is where the mapping of user interaction to logic happens.
          **/
-        private void OnKeyDownHandler(object sender, System.Windows.Input.KeyEventArgs e)
+        private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
@@ -128,7 +139,6 @@ namespace VerseMemory
                         using (XmlReader xmlReader = XmlReader.Create(new StringReader(xmlString)))
                         {
                             List<Slide> slidesFromFile = new List<Slide>();
-                            Slide slide = null;
 
                             while (xmlReader.ReadToFollowing("item"))
                             {
@@ -140,7 +150,7 @@ namespace VerseMemory
                                     xmlReader.ReadToFollowing("A");
                                     xmlReader.Read();
                                     String answer = xmlReader.Value;
-                                    slide = new Slide(question, answer);
+                                    Slide slide = new Slide(question, answer);
                                     slidesFromFile.Add(slide);
                                 }
                             }
@@ -197,7 +207,7 @@ namespace VerseMemory
         {
             for (int i = deck.finishedSlides.Count - 1; i >= 0; i--)
             {
-                Slide slide = deck.finishedSlides[i] as Slide;
+                Slide slide = deck.finishedSlides[i];
                 if (slide != null && slide.isMemorized)
                 {
                     deck.remainingSlides.Add(slide);
@@ -233,7 +243,7 @@ namespace VerseMemory
         private void AdvanceSlide()
         {
             // handle normal case, where card is memorized
-            if (currentSlide.isMemorized == true)
+            if (currentSlide.isMemorized)
             {
                 // Add slide to Finished deck.
                 deck.finishedSlides.Add(currentSlide);
@@ -309,11 +319,11 @@ namespace VerseMemory
         {
             if (deck.remainingSlides.Count > 0)
             {
-                currentSlide = deck.remainingSlides[0] as Slide;
+                currentSlide = deck.remainingSlides[0];
             }
             else if (deck.notMemorizedSlides.Count > 0)
             {
-                currentSlide = deck.notMemorizedSlides[0] as Slide;
+                currentSlide = deck.notMemorizedSlides[0];
             }
             else
             {

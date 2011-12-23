@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace VerseMemory
 {
     /// <summary>
     /// Interaction logic for DeckViewWindow.xaml
     /// </summary>
-    public partial class DeckViewWindow : Window
+    public partial class DeckViewWindow
     {
         private readonly List<Slide> slides;
 

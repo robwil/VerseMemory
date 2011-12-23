@@ -6,7 +6,7 @@ namespace VerseMemory
     /// <summary>
     /// Interaction logic for EditSlideWindow.xaml
     /// </summary>
-    public partial class EditSlideWindow : Window
+    public partial class EditSlideWindow
     {
         private Slide slideRef;
         public EditSlideWindow(Slide slide)
