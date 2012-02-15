@@ -317,13 +317,13 @@ namespace VerseMemory
          */
         private void ShowNextAvailableSlide()
         {
-            if (deck.remainingSlides.Count > 0)
-            {
-                currentSlide = deck.remainingSlides[0];
-            }
-            else if (deck.notMemorizedSlides.Count > 0)
+            if (deck.notMemorizedSlides.Count > 0)
             {
                 currentSlide = deck.notMemorizedSlides[0];
+            }
+            else if (deck.remainingSlides.Count > 0)
+            {
+                currentSlide = deck.remainingSlides[0];
             }
             else
             {
